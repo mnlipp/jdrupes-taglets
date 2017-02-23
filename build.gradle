@@ -27,15 +27,13 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-		maven { url 'https://jitpack.io' }
-		mavenLocal();
     }
 	
 	// Makes Eclipse-groovy handle *.gradle file properly
     apply plugin:'groovy' 
 
     group = 'org.jdrupes'
-	version = '0.1.0'
+	version = '0.1'
 }
 
 subprojects {

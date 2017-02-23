@@ -4,6 +4,10 @@ sourceCompatibility = '1.8'
 
 version = '0.1'
 
+repositories {
+	maven { url 'https://jitpack.io' }
+}
+
 configurations {
 	mdoclet
 }
@@ -12,8 +16,9 @@ dependencies {
 	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'8032'
     compileOnly libs.jdkTools
 
-	// For easy debugging with Eclipse, add to compile as well and refresh gradle project	
-	mdoclet 'com.github.mnlipp:org.jdrupes.mdoclet:master-SNAPSHOT'
+	// For easy debugging with Eclipse, add to "compile" as well and refresh gradle project	
+	// mdoclet 'org.jdrupes:mdoclet-doclet:0.1.0'
+	mdoclet 'com.github.mnlipp.jdrupes-mdoclet:mdoclet-doclet:0.1.0'
 }
 
 // Configure sensible layout
@@ -31,23 +36,19 @@ sourceSets {
 javadoc {
 	dependsOn classes
 	
-//	if (javax.tools.ToolProvider.getSystemDocumentationTool()
-//        .isSupportedOption("--allow-script-in-comments")) {
-//        options.addBooleanOption("-allow-script-in-comments", true)
-//    }
-
 	title = "PlantUML Taglet"
 
 	options.docletpath = configurations.mdoclet.files.asType(List)
-	options.doclet = "org.jdrupes.mdoclet.MDoclet"
-	
+	options.doclet = "org.jdrupes.mdoclet.MDoclet"	
 	options.tagletPath = (sourceSets.main.output + sourceSets.main.compileClasspath) as List
 	options.taglets = ["org.jdrupes.taglets.plantUml.Taglet"]
 
+	destinationDir = file("../../jdrupes-taglets.gh-pages/javadoc/")
+	
 	options.addStringOption("overview", "overview.md")
 	options.addBooleanOption("disable-auto-highlight", true)
 	options.addBooleanOption("linksource", true)
 	options.links("http://docs.oracle.com/javase/8/docs/api/")
 	// options.stylesheetFile(file("stylesheet.css"))
-	
+	options.addStringOption("bottom", file("../misc/javadoc.bottom.txt").text)
 }
