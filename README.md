@@ -6,7 +6,7 @@ JDrupes Taglets
 
 Useful (hopefully) taglets.
 
-[PlantUML Taglet](https://mnlipp.github.io/jdrupes-taglets/javadoc/)
+[PlantUML Taglet](https://mnlipp.github.io/jdrupes-taglets/plantuml-taglet/javadoc/)
 : A taglet that renders PlantUML diagram source embedded in javadoc comments.
 
 

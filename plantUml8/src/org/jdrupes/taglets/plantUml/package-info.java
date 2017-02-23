@@ -2,6 +2,8 @@
  * A JDK8 taglet that generates UML diagrams with 
  * [PlantUML](http://plantuml.sourceforge.net/) for inclusion in the javadoc.
  * 
+ * [ ![Download](https://api.bintray.com/packages/mnlipp/org.jdrupes/plantuml-taglet/images/download.svg) ](https://bintray.com/mnlipp/org.jdrupes/plantuml-taglet/_latestVersion)
+ *  
  * Just use the `@plantUml` tag:
  *
  * ```
