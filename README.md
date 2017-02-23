@@ -1,5 +1,5 @@
-org.jdrupes.taglets
-===================
+JDrupes Taglets
+===============
 
 [![Build Status](https://travis-ci.org/mnlipp/jdrupes-taglets.svg?branch=master)](https://travis-ci.org/mnlipp/jdrupes-taglets)
 [![Release](https://jitpack.io/v/mnlipp/jdrupes-taglets.svg)](https://jitpack.io/#mnlipp/jdrupes-taglets)
