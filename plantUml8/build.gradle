@@ -1,4 +1,27 @@
+/*
+ * JDrupes PlantUML Taglet
+ * Copyright (C) 2017  Michael N. Lipp
+ * 
+ * This program is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation; either version 3 of the License, or 
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but 
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
+ * for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along 
+ * with this program; if not, see <http://www.gnu.org/licenses/>.
+ */
+
+plugins {
+	id "com.jfrog.bintray" version "1.7.3"
+}
+
 apply plugin: 'java'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = '1.8'
 
@@ -52,3 +75,27 @@ javadoc {
 	// options.stylesheetFile(file("stylesheet.css"))
 	options.addStringOption("bottom", file("../misc/javadoc.bottom.txt").text)
 }
+
+publishing {
+	
+	publications {
+		mavenJava(MavenPublication) {
+			artifactId = "plantuml-taglet"
+			from components.java
+		}
+	}
+}
+
+bintray {
+	user = project.properties['bintrayUser'] ?: "nouser"
+	key = project.properties['bintrayApiKey'] ?: "nokey"
+	publications = ['mavenJava']
+	publish = true
+	pkg {
+		repo = project.group
+		name = "plantuml-taglet"
+		version {
+			 name = project.version
+		}
+	}
+ }
