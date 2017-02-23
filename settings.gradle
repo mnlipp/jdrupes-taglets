@@ -1,4 +1,0 @@
-include 'plantUml8'
-
-rootProject.name = 'org.jdrupes.taglets'
-
