@@ -76,12 +76,18 @@ javadoc {
 	options.addStringOption("bottom", file("../misc/javadoc.bottom.txt").text)
 }
 
+task sourceJar(type: Jar) {
+	from sourceSets.main.allJava
+	classifier "sources"
+}
+  
 publishing {
 	
 	publications {
 		mavenJava(MavenPublication) {
 			artifactId = "plantuml-taglet"
 			from components.java
+			artifact sourceJar
 		}
 	}
 }
