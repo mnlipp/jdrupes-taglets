@@ -27,6 +27,7 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+		maven { url 'https://jitpack.io' }
     }
 	
 	// Makes Eclipse-groovy handle *.gradle file properly
@@ -44,7 +45,7 @@ subprojects {
         ]
  	}
 
-	archivesBaseName = "${rootProject.name}-${project.name}"
+	archivesBaseName = "${project.name}-taglet"
 
 }
 

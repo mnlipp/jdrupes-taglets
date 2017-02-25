@@ -21,15 +21,15 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'signing'
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
 sourceCompatibility = '1.8'
 
 version = '0.1.0'
 
-repositories {
-	maven { url 'https://jitpack.io' }
-}
+archivesBaseName = "plantuml-taglet"
 
 configurations {
 	mdoclet
@@ -39,9 +39,7 @@ dependencies {
 	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'8032'
     compileOnly libs.jdkTools
 
-	// For easy debugging with Eclipse, add to "compile" as well and refresh gradle project	
-	// mdoclet 'org.jdrupes:mdoclet-doclet:0.1.0'
-	mdoclet 'com.github.mnlipp.jdrupes-mdoclet:mdoclet-doclet:0.1.0'
+	mdoclet 'com.github.mnlipp.jdrupes-mdoclet:mdoclet-doclet:master-SNAPSHOT'
 }
 
 // Configure sensible layout
@@ -76,18 +74,89 @@ javadoc {
 	options.addStringOption("bottom", file("../misc/javadoc.bottom.txt").text)
 }
 
-task sourceJar(type: Jar) {
+task sourcesJar(type: Jar) {
 	from sourceSets.main.allJava
 	classifier "sources"
 }
-  
+
+task javadocJar(type: Jar) {
+	from javadoc.destinationDir
+	classifier "javadoc"
+}
+
+// Allow build without signing information (e.g. travis)
+if (project.hasProperty('signing.keyId')) {
+	signing {
+		sign configurations.archives
+	}
+}
+
+// MavenPublishing (new), incomplete, works only for local. 
+
 publishing {
 	
 	publications {
 		mavenJava(MavenPublication) {
 			artifactId = "plantuml-taglet"
 			from components.java
-			artifact sourceJar
+			artifact sourcesJar
+			artifact javadocJar
+		}
+	}
+}
+
+// MavenPublishing (original), still needed for remote 
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+ 
+			pom.project {
+			
+				name project.name
+				artifactId project.archivesBaseName
+				packaging 'pom'
+				description project.description
+				url 'https://github.com/mnlipp/jdrupes-taglets'
+ 
+				scm {
+					url 'scm:git@github.com:mnlipp/jdrupes-taglets.git'
+					connection 'scm:git@github.com:mnlipp/jdrupes-taglets.git'
+					developerConnection 'git@github.com:mnlipp/jdrupes-taglets.git'
+				}
+ 
+				licenses {
+					license {
+						name 'GPL 3.0'
+						url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+						distribution 'repo'
+					}
+				}
+ 
+				developers {
+					developer {
+						id 'mnlipp'
+						name 'Michael N. Lipp'
+					}
+				}
+			}
+			
+			artifacts {
+				archives jar
+				archives sourcesJar
+				archives javadocJar
+			}
+
+			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+				authentication(userName: project.properties['sonatypeUsername'] ?: "nouser", 
+					password: project.properties['sonatypePassword'] ?: "nopass")
+			}
+			snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+				authentication(userName: project.properties['sonatypeUsername'] ?: "nouser", 
+					password: project.properties['sonatypePassword'] ?: "nopass")
+			}
+
 		}
 	}
 }
