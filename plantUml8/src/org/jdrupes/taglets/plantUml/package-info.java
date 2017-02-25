@@ -78,6 +78,9 @@
  * JDK8 to access the RootDoc from the taglet. At the time of this writing, this 
  * is a reasonable choice because JDK7 has reached end of life and the taglet API
  * will change dramatically in JDK9. 
+ * 
+ * This taglet is released under the
+ * [GPL 3.0](http://www.gnu.org/licenses/gpl-3.0-standalone.html).
  *  
  * @plantUml example.png
  * Alice -> Bob: Authentication Request
