@@ -34,7 +34,6 @@ allprojects {
     apply plugin:'groovy' 
 
     group = 'org.jdrupes'
-	version = '1.0.0'
 }
 
 subprojects {
