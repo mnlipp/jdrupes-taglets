@@ -27,7 +27,9 @@ apply plugin: 'maven'
 
 sourceCompatibility = '1.8'
 
-version = '1.0.0'
+version = '1.0.1'
+
+description = 'A taglet for processing PlantUML in javadoc comments'
 
 archivesBaseName = "plantuml-taglet"
 
@@ -39,7 +41,7 @@ dependencies {
 	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'8032'
     compileOnly libs.jdkTools
 
-	mdoclet 'com.github.mnlipp.jdrupes-mdoclet:mdoclet-doclet:master-SNAPSHOT'
+	mdoclet 'org.jdrupes.mdoclet:doclet:1.0.1'
 }
 
 // Configure sensible layout
@@ -97,7 +99,7 @@ publishing {
 	
 	publications {
 		mavenJava(MavenPublication) {
-			artifactId = "plantuml-taglet"
+			artifactId = project.archivesBaseName
 			from components.java
 			artifact sourcesJar
 			artifact javadocJar
@@ -167,10 +169,13 @@ bintray {
 	publications = ['mavenJava']
 	publish = true
 	pkg {
-		repo = project.group
-		name = "plantuml-taglet"
+		repo = "org.jdrupes"
+		name = "taglets"
 		version {
 			 name = project.version
+			 gpg {
+				 sign = true
+			 }
 		}
 	}
  }

@@ -33,7 +33,7 @@ allprojects {
 	// Makes Eclipse-groovy handle *.gradle file properly
     apply plugin:'groovy' 
 
-    group = 'org.jdrupes'
+    group = 'org.jdrupes.taglets'
 }
 
 subprojects {

@@ -3,7 +3,7 @@
  * [PlantUML](http://plantuml.sourceforge.net/) for inclusion in the javadoc.
  * 
  * [![Release](https://jitpack.io/v/mnlipp/jdrupes-taglets.svg)](https://jitpack.io/#mnlipp/jdrupes-taglets)
- * [![Maven Central](https://img.shields.io/maven-central/v/org.jdrupes/plantuml-taglet.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jdrupes%22%20AND%20a%3A%22plantuml-taglet%22)
+ * [![Maven Central](https://img.shields.io/maven-central/v/org.jdrupes.taglets/plantuml-taglet.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jdrupes.taglets%22%20AND%20a%3A%22plantuml-taglet%22)
  *  
  * Just use the `@plantUml` tag:
  *
@@ -53,7 +53,7 @@
  * }
  * 
  * dependencies {
- *     javadocTaglets "org.jdrupes:plantuml-taglet:<version>"
+ *     javadocTaglets "org.jdrupes.taglets:plantuml-taglet:<version>"
  * }
  * 
  * javadoc {
