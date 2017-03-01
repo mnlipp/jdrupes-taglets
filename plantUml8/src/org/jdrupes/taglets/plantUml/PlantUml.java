@@ -18,6 +18,7 @@
 package org.jdrupes.taglets.plantUml;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -36,6 +37,8 @@ import com.sun.tools.doclets.internal.toolkit.Configuration;
 import com.sun.tools.doclets.internal.toolkit.Content;
 import com.sun.tools.doclets.internal.toolkit.taglets.TagletWriter;
 
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.preproc.Defines;
 
@@ -171,34 +174,49 @@ public class PlantUml implements com.sun.tools.doclets.internal.toolkit.taglets.
 			return;
 		}
 		String source = tag.text().trim();
-		String[] nameSource = source.split("\\s", 2);
-		if ( nameSource.length < 2 ) {
+		String[] splitSource = source.split("\\s", 2);
+		if ( splitSource.length < 2 ) {
 			config.root.printError
 				(tag.position(), "Invalid " + getName() 
 				+ " tag: Expected filename and PlantUML source");
           return;
 		}
-		String fileName = nameSource[0];
-		source = "@startuml " + fileName + "\n" + nameSource[1].trim() + "\n@enduml";
-		File outputDir = new File(config.destDirName);
-		if (packageName != null) {
-			outputDir = new File(outputDir, packageName.replace(".", File.separator));
-		}
-		outputDir.mkdirs();
-		File outputFile;
-		outputFile = new File(outputDir, fileName.replace("/", File.separator));
+		FileFormat fileFormat = getFileFormat(config, splitSource[0]);
+		File outputFile = getOutputFile(config, packageName, splitSource[0]);
 		config.root.printNotice("Generating UML diagram " + outputFile);
 		// render
+		source = "@startuml\n" + splitSource[1].trim() + "\n@enduml";
 		SourceStringReader reader = new SourceStringReader
 				(new Defines(), source, plantConfig(config));
 		try {
-			reader.generateImage(outputFile);
+			reader.generateImage(new FileOutputStream(outputFile),
+					new FileFormatOption(fileFormat));
 		}
 		catch ( IOException e ) {
 			config.root.printError
 			(tag.position(), "Error generating UML image " + outputFile + ": " 
 					+ e.getLocalizedMessage());
 		}
+	}
+
+	private FileFormat getFileFormat(Configuration config, String name) {
+		for (FileFormat f: FileFormat.values()) {
+			if (name.toLowerCase().endsWith(f.getFileSuffix())) {
+				return f;
+			}
+		}
+		String msg = "Unsupported file extension: " + name;
+		config.root.printError(msg);
+		throw new IllegalArgumentException(msg);
+	}
+
+	private File getOutputFile(Configuration config, String packageName, String fileName) {
+		File outputDir = new File(config.destDirName);
+		if (packageName != null) {
+			outputDir = new File(outputDir, packageName.replace(".", File.separator));
+		}
+		outputDir.mkdirs();
+		return new File(outputDir, fileName.replace("/", File.separator));
 	}
 	
 }
