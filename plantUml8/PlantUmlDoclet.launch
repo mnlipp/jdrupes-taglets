@@ -8,6 +8,6 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.sun.tools.javadoc.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-doclet org.jdrupes.mdoclet.MDoclet -taglet org.jdrupes.taglets.plantUml.Taglet -overview overview.md -d build/docs/javadoc -sourcepath src -subpackages org.jdrupes.taglets.plantUml"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-taglet org.jdrupes.taglets.plantUml.Taglet -d build/testfiles testfiles/Test.java"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="plantUml8"/>
 </launchConfiguration>
