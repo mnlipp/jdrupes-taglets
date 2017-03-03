@@ -42,7 +42,7 @@ dependencies {
     compileOnly libs.jdkTools
 
 	// Add this to compile as well for debugging
-	mdoclet 'org.jdrupes.mdoclet:doclet:1.0.2'
+	mdoclet 'org.jdrupes.mdoclet:doclet:1.0.3'
 	// mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
 }
 
@@ -71,6 +71,7 @@ javadoc {
 	destinationDir = file("../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/")
 	
 	options.addStringOption("overview", "overview.md")
+	inputs.file "overview.md"
 	options.addBooleanOption("disable-auto-highlight", true)
 	options.addBooleanOption("linksource", true)
 	options.links("http://docs.oracle.com/javase/8/docs/api/")
