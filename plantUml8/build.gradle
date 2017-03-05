@@ -38,7 +38,7 @@ configurations {
 }
 
 dependencies {
-	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'8032'
+	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'8057'
     compileOnly libs.jdkTools
 
 	// Add this to compile as well for debugging
