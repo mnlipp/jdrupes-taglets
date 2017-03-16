@@ -27,7 +27,7 @@ apply plugin: 'maven'
 
 sourceCompatibility = '1.8'
 
-version = '1.0.4-SNAPSHOT'
+version = '1.0.4'
 
 description = 'A taglet for processing PlantUML in javadoc comments'
 
@@ -38,7 +38,7 @@ configurations {
 }
 
 dependencies {
-	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'8057'
+	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'8059'
     compileOnly libs.jdkTools
 
 	// Add this to compile as well for debugging
