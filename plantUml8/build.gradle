@@ -180,8 +180,8 @@ bintray {
 	publications = ['mavenJava']
 	publish = true
 	pkg {
-		repo = "org.jdrupes"
-		name = "taglets"
+		repo = "jdrupes"
+		name = "org.jdrupes.taglets"
 		version {
 			 name = project.version
 			 gpg {
