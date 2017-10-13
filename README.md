@@ -10,3 +10,7 @@ Useful (hopefully) taglets.
 : A taglet that renders PlantUML diagram source embedded in javadoc comments.
 
 
+<!-- Piwik Image Tracker-->
+<img src="https://piwik.mnl.de/piwik.php?idsite=10&rec=1" style="border:0" alt="" />
+<!-- End Piwik -->
+
