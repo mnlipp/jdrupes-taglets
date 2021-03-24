@@ -73,6 +73,8 @@ task java11doc(type: JavaExec) {
     classpath sourceSets.main.compileClasspath
     classpath files(tasks.jar)
     
+    ext.destinationDir = '../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/'
+    
     main = 'jdk.javadoc.internal.tool.Main'
     args = ['-doctitle', 'PlantUML Taglet',
         '-use',
@@ -87,7 +89,7 @@ task java11doc(type: JavaExec) {
         '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
         '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
         '-overview', 'overview.md',
-        '-d', '../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/',
+        '-d', destinationDir,
         '-sourcepath', 'src/',
         '-subpackages', 'org.jdrupes.taglets',
         '-bottom', file("../misc/javadoc.bottom.txt").text,
@@ -97,27 +99,6 @@ task java11doc(type: JavaExec) {
         ]
     
     ignoreExitValue true
-}
-
-javadoc {
-	dependsOn classes
-	
-	title = "PlantUML Taglet"
-
-	options.docletpath = configurations.mdoclet.files.asType(List)
-	options.doclet = "org.jdrupes.mdoclet.MDoclet"	
-	options.tagletPath = (sourceSets.main.output + sourceSets.main.compileClasspath) as List
-	options.taglets = ["org.jdrupes.taglets.plantUml.Taglet"]
-
-	destinationDir = file("../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/")
-	
-	options.addStringOption("overview", "overview.md")
-	inputs.file "overview.md"
-	options.addBooleanOption("disable-auto-highlight", true)
-	options.addBooleanOption("linksource", true)
-	options.links("http://docs.oracle.com/javase/8/docs/api/")
-	// options.stylesheetFile(file("stylesheet.css"))
-	options.addStringOption("bottom", file("../misc/javadoc.bottom.txt").text)
 }
 
 task fatJar(type:Jar) {
@@ -134,7 +115,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadocJar(type: Jar) {
-	from javadoc.destinationDir
+	from java11doc.destinationDir
 	classifier "javadoc"
 }
 
@@ -145,73 +126,54 @@ if (project.hasProperty('signing.keyId')) {
 	}
 }
 
-// MavenPublishing (new), incomplete, works only for local. 
-
 publishing {
 	
-	publications {
-		mavenJava(MavenPublication) {
-			artifactId = project.archivesBaseName
-			from components.java
-			artifact sourcesJar
-			artifact javadocJar
-		}
-	}
+    repositories {
+        maven {
+            name "snapshot"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+            credentials {
+                username project.properties['sonatypeUsername'] ?: "nouser"
+                password project.properties['sonatypePassword'] ?: "nopass"
+            }
+        }
+        maven {
+            name "release"
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username project.properties['sonatypeUsername'] ?: "nouser"
+                password project.properties['sonatypePassword'] ?: "nopass"
+            }
+        }
+    }
+    
 }
 
-// MavenPublishing (original), still needed for remote 
+// Additional configuration of publishing
+apply plugin: ConfigurePublishing
 
-uploadArchives {
-	repositories {
-		mavenDeployer {
-			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
- 
-			pom.project {
-			
-				name project.name
-				artifactId project.archivesBaseName
-				packaging 'pom'
-				description project.description
-				url 'https://github.com/mnlipp/jdrupes-taglets'
- 
-				scm {
-					url 'scm:git@github.com:mnlipp/jdrupes-taglets.git'
-					connection 'scm:git@github.com:mnlipp/jdrupes-taglets.git'
-					developerConnection 'git@github.com:mnlipp/jdrupes-taglets.git'
-				}
- 
-				licenses {
-					license {
-						name 'GPL 3.0'
-						url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
-						distribution 'repo'
-					}
-				}
- 
-				developers {
-					developer {
-						id 'mnlipp'
-						name 'Michael N. Lipp'
-					}
-				}
-			}
-			
-			artifacts {
-				archives jar
-				archives sourcesJar
-				archives javadocJar
-			}
-
-			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-				authentication(userName: project.properties['sonatypeUsername'] ?: "nouser", 
-					password: project.properties['sonatypePassword'] ?: "nopass")
-			}
-			snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-				authentication(userName: project.properties['sonatypeUsername'] ?: "nouser", 
-					password: project.properties['sonatypePassword'] ?: "nopass")
-			}
-
-		}
-	}
+configurePublishing {
+    withPomXml {
+        asNode().with {
+            appendNode('url', 'https://github.com/mnlipp/jdrupes-taglets')
+            appendNode('scm').with {
+                appendNode('url', 'scm:git@github.com:mnlipp/jdrupes-taglets.git')
+                appendNode('connection', 'scm:git@github.com:mnlipp/jdrupes-taglets.git')
+                appendNode('developerConnection', 'git@github.com:mnlipp/jdrupes-taglets.git')
+            }
+            appendNode('licenses').with {
+                appendNode('license').with {
+                    appendNode('name', 'AGPL 3.0')
+                    appendNode('url', 'https://www.gnu.org/licenses/gpl-3.0.en.html')
+                    appendNode('distribution', 'repo')
+                }
+            }
+            appendNode('developers').with {
+                appendNode('developer').with {
+                    appendNode('id', 'mnlipp')
+                    appendNode('name', 'Michael N. Lipp')
+                }
+            }
+        }
+    }
 }
-
