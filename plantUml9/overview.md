@@ -1,7 +1,7 @@
 A taglet that generates UML diagrams with 
 [PlantUML](http://plantuml.sourceforge.net/) for inclusion in the javadoc.
- 
-[![Maven Central](https://img.shields.io/maven-central/v/org.jdrupes.taglets/plantuml-taglet.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jdrupes.taglets%22%20AND%20a%3A%22plantuml-taglet%22)
+
+<a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jdrupes.taglets%22%20AND%20a%3A%22plantuml-taglet%22"><img src="https://img.shields.io/maven-central/v/org.jdrupes.taglets/plantuml-taglet.svg"></a>
   
 Simply use the `@plantUml` tag to generate the graphics file from the 
 PlantUML source[^1]:
@@ -36,13 +36,33 @@ This package/class ...
 [^1]: The PlantUML source for the example above is actually 
     in the package description instead of the overview source file.
     Java-11 to Java-15 (at least) drop block tags from an overview file.
-    (Worked in Java-8.)
+    (Used to worked in Java-8.)
  
 The usage of "`<`" and "`>`" in PlantUML make javadoc complain about 
-illegal HTML tokens. Of course, you can use "`&lt;`" and "`&gt;`" but 
-this reduces the readability of the UML descriptions. It is therefore
-recommended to disable HTML checks with e.g. `-Xdoclint:-html` when using 
-PlantUML.
+illegal HTML tokens. Of course, you could use "`&amp;lt;`" and "`&amp;gt;`" but 
+this reduces the readability of the UML descriptions and is therefore
+not supported (the taglet does *not* scan for these sequences and convert
+them). You could globally disable HTML checks with e.g. "`-Xdoclint:-html`"
+when using PlantUML but this might prevent other problems from being detected.
+
+The preferred approach is to put the PlantUML source in comments as
+shown below.
+
+```
+/**
+ * @plantUml package.svg
+ * &lt;!--
+ * Bob <-- Alice: Authentication Request
+ * Alice <-- Bob: Authentication Response
+ * --&gt;
+ */
+```
+
+The taglet removes the comment delimiters and uses the resulting content
+as PlantUML source. Of course, you also have to avoid all "`-->`" arrows in 
+your PlantUML description as this would terminate the HTML comment 
+prematurely. Luckily, this isn't too hard because you can always exchange 
+the left and right side of such a relation.
  
 It's also possible to use `@startuml` and `@enduml` instead of `@plantuml`, 
 which is the common usage pattern. `@startuml` is simply a synonym for 
