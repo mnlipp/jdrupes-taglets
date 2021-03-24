@@ -135,8 +135,10 @@ public class PlantUml implements Taglet {
 
                     @Override
                     public Object visitComment(CommentTree node, Object p) {
-                        // TODO Auto-generated method stub
-                        return super.visitComment(node, p);
+                        String comment = node.getBody();
+                        source
+                            .append(comment.substring(4, comment.length() - 3));
+                        return null;
                     }
 
                 }.visit(node.getContent(), null);

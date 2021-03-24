@@ -5,7 +5,7 @@
  * 
  * @plantUml package.svg
  * <!--
- * Alice --> Bob: Authentication Request
+ * Bob <-- Alice: Authentication Request
  * Alice <-- Bob: Authentication Response
  * -->
  */
