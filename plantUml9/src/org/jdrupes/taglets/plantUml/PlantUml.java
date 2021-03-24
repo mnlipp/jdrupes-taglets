@@ -37,6 +37,7 @@ import javax.tools.JavaFileManager;
 
 import com.sun.source.doctree.CommentTree;
 import com.sun.source.doctree.DocTree;
+import com.sun.source.doctree.ErroneousTree;
 import com.sun.source.doctree.TextTree;
 import com.sun.source.doctree.UnknownBlockTagTree;
 import com.sun.source.util.SimpleDocTreeVisitor;
@@ -104,6 +105,7 @@ public class PlantUml implements Taglet {
 
         // render
         plantUmlSource = "@startuml\n" + splitSource[1].trim() + "\n@enduml";
+        System.out.println(plantUmlSource);
         SourceStringReader reader = new SourceStringReader(
             Defines.createEmpty(), plantUmlSource, plantConfig());
         try {
@@ -138,6 +140,12 @@ public class PlantUml implements Taglet {
                         String comment = node.getBody();
                         source
                             .append(comment.substring(4, comment.length() - 3));
+                        return null;
+                    }
+
+                    @Override
+                    public Object visitErroneous(ErroneousTree node, Object p) {
+                        source.append(node.getBody());
                         return null;
                     }
 
