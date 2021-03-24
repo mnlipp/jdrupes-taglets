@@ -35,6 +35,7 @@ import javax.tools.DocumentationTool;
 import javax.tools.FileObject;
 import javax.tools.JavaFileManager;
 
+import com.sun.source.doctree.CommentTree;
 import com.sun.source.doctree.DocTree;
 import com.sun.source.doctree.TextTree;
 import com.sun.source.doctree.UnknownBlockTagTree;
@@ -130,6 +131,12 @@ public class PlantUml implements Taglet {
                     public Object visitText(TextTree node, Object p) {
                         source.append(node.getBody());
                         return null;
+                    }
+
+                    @Override
+                    public Object visitComment(CommentTree node, Object p) {
+                        // TODO Auto-generated method stub
+                        return super.visitComment(node, p);
                     }
 
                 }.visit(node.getContent(), null);
