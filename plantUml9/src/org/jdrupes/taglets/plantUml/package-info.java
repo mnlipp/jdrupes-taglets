@@ -15,42 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License along 
  * with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-package org.jdrupes.taglets.plantUml;
-
-import java.util.List;
-import java.util.Set;
-
-import javax.lang.model.element.Element;
-
-import com.sun.source.doctree.DocTree;
-
-import jdk.javadoc.doclet.Taglet;
-
 /**
- * A dummy taglet that provides no output.
+ * The main package.
+ * 
+ * @plantUml example.svg
+ * Alice -> Bob: Authentication Request
+ * Bob --> Alice: Authentication Response
+ * 
  */
-public class EndUml implements Taglet {
-
-    @Override
-    public String getName() {
-        return "enduml";
-    }
-
-    @Override
-    public Set<Location> getAllowedLocations() {
-        return Set.of(Taglet.Location.OVERVIEW, Taglet.Location.PACKAGE,
-            Taglet.Location.TYPE);
-    }
-
-    @Override
-    public boolean isInlineTag() {
-        return false;
-    }
-
-    @Override
-    public String toString(List<? extends DocTree> tags, Element element) {
-        return "";
-    }
-
-}
+package org.jdrupes.taglets.plantUml;

@@ -1,0 +1,22 @@
+apply plugin: 'eclipse'
+    
+eclipse {
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+    jdt {
+		sourceCompatibility = 11
+        targetCompatibility = 11
+        javaRuntimeName = "JavaSE-11"
+        file {
+            withProperties { properties ->
+                def formatterPrefs = new Properties()
+                rootProject.file("gradle/org.eclipse.jdt.core.formatter.prefs")
+                    .withInputStream { formatterPrefs.load(it) }
+                properties.putAll(formatterPrefs)
+            }
+        }
+    }
+}
+tasks.eclipse.dependsOn(cleanEclipse)

@@ -1,4 +1,4 @@
-include 'plantUml8'
+include 'plantUml9'
 
 rootProject.name = 'org.jdrupes.taglets'
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/plantUml9"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jdk.javadoc.internal.tool.Main"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="plantUml9"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-taglet org.jdrupes.taglets.plantUml.PlantUml&#10;-Xdoclint:-html&#10;-overview testfiles/overview.html&#10;-d build/testfiles&#10;-sourcepath testfiles/&#10;-subpackages test"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="plantUml9"/>
+</launchConfiguration>

@@ -4,7 +4,7 @@ A taglet that generates UML diagrams with
 [![Maven Central](https://img.shields.io/maven-central/v/org.jdrupes.taglets/plantuml-taglet.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jdrupes.taglets%22%20AND%20a%3A%22plantuml-taglet%22)
   
 Simply use the `@plantUml` tag to generate the graphics file from the 
-PlantUML source:
+PlantUML source[^1]:
 
 ```
 /**
@@ -27,11 +27,16 @@ This is rendered as:
  
 Description.
  
-![Example Diagram](example.svg)
+![Example Diagram](org/jdrupes/taglets/plantUml/example.svg)
  
 This package/class ...
  
 ---
+
+[^1]: The PlantUML source for the example above is actually 
+    in the package description instead of the overview source file.
+    Java-11 to Java-15 (at least) drop block tags from an overview file.
+    (Worked in Java-8.)
  
 The usage of "`<`" and "`>`" in PlantUML make javadoc complain about 
 illegal HTML tokens. Of course, you can use "`&lt;`" and "`&gt;`" but 
@@ -100,9 +105,5 @@ Notes
 
 This taglet is released under the
 [GPL 3.0](http://www.gnu.org/licenses/gpl-3.0-standalone.html).
-  
-@plantUml example.svg
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
 
-@see "PlantUML <http://plantuml.sourceforge.net>"
+See [PlantUM](http://plantuml.sourceforge.net).

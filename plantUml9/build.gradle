@@ -69,8 +69,7 @@ task java11doc(type: JavaExec) {
     dependsOn classes
     inputs.file "overview.md"
 
-    jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
-        '--add-opens=jdk.javadoc/jdk.javadoc.doclet=ALL-UNNAMED']
+    jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED']
     classpath sourceSets.main.compileClasspath
     classpath files(tasks.jar)
     
@@ -93,6 +92,7 @@ task java11doc(type: JavaExec) {
         '-subpackages', 'org.jdrupes.taglets',
         '-bottom', file("../misc/javadoc.bottom.txt").text,
         '--allow-script-in-comments',
+        '-Xdoclint:-html',
         '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED'
         ]
     
