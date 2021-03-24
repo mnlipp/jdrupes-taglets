@@ -105,7 +105,6 @@ public class PlantUml implements Taglet {
 
         // render
         plantUmlSource = "@startuml\n" + splitSource[1].trim() + "\n@enduml";
-        System.out.println(plantUmlSource);
         SourceStringReader reader = new SourceStringReader(
             Defines.createEmpty(), plantUmlSource, plantConfig());
         try {
