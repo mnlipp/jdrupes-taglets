@@ -84,7 +84,14 @@ public class PlantUml implements Taglet {
 
     @Override
     public String toString(List<? extends DocTree> tags, Element element) {
-        String plantUmlSource = extractPlantUmlSource(tags);
+        for (DocTree tagTree : tags) {
+            processTag(tagTree, element);
+        }
+        return "";
+    }
+
+    private void processTag(DocTree tree, Element element) {
+        String plantUmlSource = extractPlantUmlSource(tree);
         String[] splitSource = plantUmlSource.split("\\s", 2);
         if (splitSource.length < 2) {
             throw new IllegalArgumentException("Invalid " + getName()
@@ -105,6 +112,7 @@ public class PlantUml implements Taglet {
 
         // render
         plantUmlSource = "@startuml\n" + splitSource[1].trim() + "\n@enduml";
+        System.out.println(plantUmlSource);
         SourceStringReader reader = new SourceStringReader(
             Defines.createEmpty(), plantUmlSource, plantConfig());
         try {
@@ -116,10 +124,9 @@ public class PlantUml implements Taglet {
                     + e.getLocalizedMessage());
         }
 
-        return "";
     }
 
-    private String extractPlantUmlSource(List<? extends DocTree> tags) {
+    private String extractPlantUmlSource(DocTree tagTree) {
         StringBuilder source = new StringBuilder();
         new SimpleDocTreeVisitor<>() {
 
@@ -158,7 +165,7 @@ public class PlantUml implements Taglet {
                 return null;
             }
 
-        }.visit(tags, null);
+        }.visit(tagTree, null);
         return source.toString();
     }
 
