@@ -3,6 +3,9 @@ A taglet that generates UML diagrams with
 
 <a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jdrupes.taglets%22%20AND%20a%3A%22plantuml-taglet%22"><img src="https://img.shields.io/maven-central/v/org.jdrupes.taglets/plantuml-taglet.svg"></a>
   
+**Please note that starting with version 2.0.0 the taglet works with 
+the API introduced in Java 9. It has been tested with Java-11.**
+  
 Simply use the `@plantUml` tag to generate the graphics file from the 
 PlantUML source[^1]:
 
