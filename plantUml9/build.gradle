@@ -23,7 +23,7 @@ apply plugin: 'maven'
 
 sourceCompatibility = '11'
 
-version = '2.0.0-SNAPSHOT'
+version = '2.0.0'
 
 description = 'A taglet for processing PlantUML in javadoc comments'
 
@@ -55,6 +55,20 @@ sourceSets {
 
 compileJava {
 //    options.compilerArgs << '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED'
+}
+
+jar {
+    manifest {
+        inputs.property("gitDescriptor", { grgit.describe() })
+        
+        // Set Git revision information in the manifests of built bundles
+        attributes('Git-SHA': grgit.head().id)
+    }
+    doFirst {
+        manifest {
+            attributes('Git-Descriptor': inputs.properties['gitDescriptor'])
+        }
+    }
 }
 
 configurations {
@@ -177,3 +191,24 @@ configurePublishing {
         }
     }
 }
+
+task releaseTag {
+    doLast {
+        String name = project.name.startsWith(project.group + ".") ?
+            project.name.substring(project.group.length() + 1) : project.name
+        name = name.replace('.', '-')
+        String tag = name + "-" + project.version
+        grgit.tag.add(name: tag, message: "Released.")
+        grgit.push(refsOrSpecs: [tag])
+    }
+}
+
+build.mustRunAfter "releaseTag"
+
+task stageOnOssrh {
+    group = "publishing"
+    
+    dependsOn "releaseTag"
+    dependsOn "publishMavenPublicationToReleaseRepository"
+}
+

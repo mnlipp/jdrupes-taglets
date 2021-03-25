@@ -16,6 +16,10 @@
  * with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
+plugins {
+    id 'org.ajoberstar.grgit' version '4.1.0'
+}
+ 
 allprojects {
 	
     repositories {
