@@ -129,4 +129,5 @@ Notes
 This taglet is released under the
 [GPL 3.0](http://www.gnu.org/licenses/gpl-3.0-standalone.html).
 
-See [PlantUM](http://plantuml.sourceforge.net).
+The project's sources can be found on 
+[GitHub](https://github.com/mnlipp/jdrupes-taglets).
