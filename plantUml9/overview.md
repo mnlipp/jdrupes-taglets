@@ -39,7 +39,8 @@ This package/class ...
 [^1]: The PlantUML source for the example above is actually 
     in the package description instead of the overview source file.
     Java-11 to Java-15 (at least) drop block tags from an overview file.
-    (Used to worked in Java-8.)
+    (Used to worked in Java-8.) See the report in the
+    [Java Bug Database](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8264274)
  
 The usage of "`<`" and "`>`" in PlantUML make javadoc complain about 
 illegal HTML tokens. Of course, you could use "`&amp;lt;`" and "`&amp;gt;`" but 
