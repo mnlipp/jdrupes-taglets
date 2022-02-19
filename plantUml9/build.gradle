@@ -22,8 +22,9 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven'
 
 sourceCompatibility = '11'
+targetCompatibility = '11'
 
-version = '2.0.0'
+version = '2.0.1'
 
 description = 'A taglet for processing PlantUML in javadoc comments'
 
@@ -34,7 +35,7 @@ configurations {
 }
 
 dependencies {
-	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2017.18'
+	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2022.1'
 
 	// Add this to compile as well for debugging
 	mdoclet 'org.jdrupes.mdoclet:doclet:1.0.3'
@@ -58,12 +59,18 @@ compileJava {
 }
 
 jar {
+    into("META-INF/maven/$project.group/$project.name") {
+        from { generatePomFileForMavenPublication }
+        rename ".*", "pom.xml"
+    }
+    
     manifest {
         inputs.property("gitDescriptor", { grgit.describe() })
         
         // Set Git revision information in the manifests of built bundles
         attributes('Git-SHA': grgit.head().id)
     }
+    
     doFirst {
         manifest {
             attributes('Git-Descriptor': inputs.properties['gitDescriptor'])
@@ -76,7 +83,7 @@ configurations {
 }
  
 dependencies {
-    markdownDoclet "org.jdrupes.mdoclet:doclet:2.0.0-SNAPSHOT"
+    markdownDoclet "org.jdrupes.mdoclet:doclet:2.1.0"
 }
  
 task java11doc(type: JavaExec) {
