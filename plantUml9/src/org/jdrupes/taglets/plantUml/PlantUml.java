@@ -35,12 +35,7 @@ import javax.tools.DocumentationTool;
 import javax.tools.FileObject;
 import javax.tools.JavaFileManager;
 
-import com.sun.source.doctree.CommentTree;
 import com.sun.source.doctree.DocTree;
-import com.sun.source.doctree.ErroneousTree;
-import com.sun.source.doctree.TextTree;
-import com.sun.source.doctree.UnknownBlockTagTree;
-import com.sun.source.util.SimpleDocTreeVisitor;
 
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
@@ -91,9 +86,9 @@ public class PlantUml implements Taglet {
     }
 
     private void processTag(DocTree tree, Element element) {
-        String plantUmlSource = extractPlantUmlSource(tree);
-        String[] splitSource = plantUmlSource.split("\\s", 2);
-        if (splitSource.length < 2) {
+        String plantUmlSource = tree.toString();
+        String[] splitSource = plantUmlSource.split("\\s", 3);
+        if (splitSource.length < 3) {
             throw new IllegalArgumentException("Invalid " + getName()
                 + " tag: Expected filename and PlantUML source");
         }
@@ -103,69 +98,26 @@ public class PlantUml implements Taglet {
         try {
             graphicsFile = fileManager.getFileForOutput(
                 DocumentationTool.Location.DOCUMENTATION_OUTPUT, packageName,
-                splitSource[0], null);
+                splitSource[1], null);
         } catch (IOException e) {
             throw new RuntimeException(
                 "Error generating output file for " + packageName + "/"
-                    + splitSource[0] + ": " + e.getLocalizedMessage());
+                    + splitSource[1] + ": " + e.getLocalizedMessage());
         }
 
         // render
-        plantUmlSource = "@startuml\n" + splitSource[1].trim() + "\n@enduml";
+        plantUmlSource = "@startuml\n" + splitSource[2].trim() + "\n@enduml";
         SourceStringReader reader = new SourceStringReader(
             Defines.createEmpty(), plantUmlSource, plantConfig());
         try {
             reader.outputImage(graphicsFile.openOutputStream(),
-                new FileFormatOption(getFileFormat(splitSource[0])));
+                new FileFormatOption(getFileFormat(splitSource[1])));
         } catch (IOException e) {
             throw new RuntimeException(
                 "Error generating UML image " + graphicsFile.getName() + ": "
                     + e.getLocalizedMessage());
         }
 
-    }
-
-    private String extractPlantUmlSource(DocTree tagTree) {
-        StringBuilder source = new StringBuilder();
-        new SimpleDocTreeVisitor<>() {
-
-            @Override
-            public Object visitUnknownBlockTag(UnknownBlockTagTree node,
-                    Object p) {
-                new SimpleDocTreeVisitor<>() {
-
-                    @Override
-                    public Object visitText(TextTree node, Object p) {
-                        source.append(node.getBody());
-                        return null;
-                    }
-
-                    @Override
-                    public Object visitComment(CommentTree node, Object p) {
-                        String comment = node.getBody();
-                        source
-                            .append(comment.substring(4, comment.length() - 3));
-                        return null;
-                    }
-
-                    @Override
-                    public Object visitErroneous(ErroneousTree node, Object p) {
-                        source.append(node.getBody());
-                        return null;
-                    }
-
-                }.visit(node.getContent(), null);
-                return null;
-            }
-
-            @Override
-            public Object visitText(TextTree node, Object p) {
-                source.append(node.getBody());
-                return null;
-            }
-
-        }.visit(tagTree, null);
-        return source.toString();
     }
 
     private String extractPackageName(Element element) {

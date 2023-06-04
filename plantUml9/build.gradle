@@ -24,7 +24,7 @@ apply plugin: 'maven'
 sourceCompatibility = '11'
 targetCompatibility = '11'
 
-version = '2.0.1'
+version = '2.1.0'
 
 description = 'A taglet for processing PlantUML in javadoc comments'
 
@@ -35,10 +35,10 @@ configurations {
 }
 
 dependencies {
-	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2022.1'
+	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
 
 	// Add this to compile as well for debugging
-	mdoclet 'org.jdrupes.mdoclet:doclet:1.0.3'
+	compile 'org.jdrupes.mdoclet:doclet:2.1.0'
 	// mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
 }
 
