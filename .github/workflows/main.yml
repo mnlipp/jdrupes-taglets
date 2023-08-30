@@ -23,3 +23,9 @@ jobs:
         run: ./gradlew build apidocs
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Generate test JavaDocs
+        run: ./gradlew testJavaDoc
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Test JavaDocs JDK ${{ matrix.java-version }}
+          path: plantUml9/build/test-javadocs
