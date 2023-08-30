@@ -20,8 +20,8 @@ PlantUML source[^1]:
  * @plantUml example.svg
  * Alice -> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
- * 
-{@literal *}/
+ *
+ *}/
 ```
 
 This is rendered as:
