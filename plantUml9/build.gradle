@@ -94,7 +94,7 @@ task apidocs(type: JavaExec) {
     classpath sourceSets.main.compileClasspath
     classpath files(tasks.jar)
     
-    ext.destinationDir = '../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/'
+    ext.destinationDir = "$projectDir/build/docs/javadoc"
     
     main = 'jdk.javadoc.internal.tool.Main'
     args = ['-doctitle', 'PlantUML Taglet',
@@ -121,6 +121,11 @@ task apidocs(type: JavaExec) {
         ]
     
     ignoreExitValue true
+}
+
+task docs (type: Copy) {
+    from apidocs.destinationDir
+    into '../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/'
 }
 
 task fatJar(type:Jar) {
