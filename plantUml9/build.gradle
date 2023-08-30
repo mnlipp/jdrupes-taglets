@@ -89,7 +89,8 @@ task java11doc(type: JavaExec) {
     dependsOn classes
     inputs.file "overview.md"
 
-    jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED']
+    jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED']
     classpath sourceSets.main.compileClasspath
     classpath files(tasks.jar)
     
@@ -101,6 +102,7 @@ task java11doc(type: JavaExec) {
         '-linksource',
         '-link', 'https://docs.oracle.com/en/java/javase/11/docs/api/',
         '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
+        '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
         '-doclet', 'org.jdrupes.mdoclet.MDoclet',
         '-docletpath', configurations.markdownDoclet.files.asType(List).join(":"),
         '--disable-auto-highlight',
