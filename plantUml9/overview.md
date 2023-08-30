@@ -6,7 +6,12 @@ A taglet that generates UML diagrams with
 **Please note that starting with version 2.0.0 the taglet works with
 the API introduced in Java 9. It has been tested with Java-11.**
 
-**Starting with version 3.0.0 the taglet requires Java-17.**
+## Changes of version 3.0.0
+
+- `@plantuml` is now completely lower case. In case you want to have mixed case, additionally use `PlantUmlMixedCase`.
+- Starting with version 3.0.0 the taglet requires Java-17.
+
+## Quickstart
 
 Simply use the `@plantUml` tag to generate the graphics file from the
 PlantUML source[^1]:
@@ -19,7 +24,7 @@ PlantUML source[^1]:
  *
  * This package/class ...
  *
- * @plantUml example.svg
+ * @plantuml example.svg
  * Alice -> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
  */
@@ -55,7 +60,7 @@ shown below.
 
 ```java
 /**
- * @plantUml package.svg
+ * @plantuml package.svg
  * &lt;!--
  * Bob <-- Alice: Authentication Request
  * Alice <-- Bob: Authentication Response
@@ -71,7 +76,7 @@ the left and right side of such a relation.
 
 It's also possible to use `@startuml` and `@enduml` instead of `@plantuml`,
 which is the common usage pattern. `@startuml` is simply a synonym for
-`@plantUml` and `@enduml` will be ignored entirely. Use this for
+`@plantuml` and `@enduml` will be ignored entirely. Use this for
 compatibility with other tools, like e.g. the
 [PlantUML Eclipse Plugin](http://plantuml.com/eclipse) or the
 [PlantUML IDEA Plugin](https://github.com/esteinberg/plantuml4idea).
@@ -98,7 +103,7 @@ dependencies {
 
 javadoc {
     options.tagletPath = configurations.taglets.files.asType(List)
-    options.taglets = ["org.jdrupes.taglets.plantUml.PlantUml", "org.jdrupes.taglets.plantUml.StartUml", "org.jdrupes.taglets.plantUml.EndUml"
+    options.taglets = ["org.jdrupes.taglets.plantUml.PlantUml", "org.jdrupes.taglets.plantUml.PlantUmlMixedCase", "org.jdrupes.taglets.plantUml.StartUml", "org.jdrupes.taglets.plantUml.EndUml"
 }
 ```
 

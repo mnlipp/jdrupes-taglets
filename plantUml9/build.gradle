@@ -108,6 +108,7 @@ task apidocs(type: JavaExec) {
         '--disable-auto-highlight',
         '-tagletpath', files(tasks.jar).asType(List).join(":"),
         '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
+        '-taglet', 'org.jdrupes.taglets.plantUml.PlantUmlMixedCase',
         '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
         '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
         '-overview', 'overview.md',
