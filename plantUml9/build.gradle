@@ -21,8 +21,8 @@ apply plugin: 'signing'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
 
-sourceCompatibility = '11'
-targetCompatibility = '11'
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 version = '2.1.0'
 
