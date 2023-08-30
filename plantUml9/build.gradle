@@ -20,10 +20,10 @@ apply plugin: 'java'
 apply plugin: 'signing'
 apply plugin: 'maven-publish'
 
-sourceCompatibility = '11'
-targetCompatibility = '11'
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
-version = '2.1.0'
+version = '3.0.0-SNAPSHOT'
 
 description = 'A taglet for processing PlantUML in javadoc comments'
 
@@ -37,7 +37,7 @@ dependencies {
 	implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
 
 	// Add this to compile as well for debugging
-	implementation 'org.jdrupes.mdoclet:doclet:2.1.0'
+	implementation 'org.jdrupes.mdoclet:doclet:3.0.0'
 	// mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
 }
 
