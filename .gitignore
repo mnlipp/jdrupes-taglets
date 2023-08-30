@@ -1,4 +1,6 @@
 .idea/
+.vscode/
+!.vscode/extensions.json
 /.gradle/
 /build/
 /.classpath
