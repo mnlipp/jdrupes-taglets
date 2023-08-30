@@ -23,5 +23,9 @@ jobs:
         run: ./gradlew build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Build JavaDoc
-        run: ./gradlew :plantUml9:java17doc
+      - name: Build documentation
+        run: ./gradlew :plantUml9:docs
+      - uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: ../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/

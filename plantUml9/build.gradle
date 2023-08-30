@@ -85,7 +85,7 @@ dependencies {
     markdownDoclet "org.jdrupes.mdoclet:doclet:3.0.0"
 }
  
-task java17doc(type: JavaExec) {
+task docs(type: JavaExec) {
     dependsOn classes
     inputs.file "overview.md"
 
