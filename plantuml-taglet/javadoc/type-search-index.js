@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"org.jdrupes.taglets.plantUml","l":"EndUml"},{"p":"org.jdrupes.taglets.plantUml","l":"PlantUml"},{"p":"org.jdrupes.taglets.plantUml","l":"StartUml"}]
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.jdrupes.taglets.plantUml","l":"EndUml"},{"p":"org.jdrupes.taglets.plantUml","l":"PlantUml"},{"p":"org.jdrupes.taglets.plantUml","l":"StartUml"}];updateSearchResults();
