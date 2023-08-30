@@ -30,15 +30,15 @@ description = 'A taglet for processing PlantUML in javadoc comments'
 archivesBaseName = "plantuml-taglet"
 
 configurations {
-	mdoclet
+    mdoclet
 }
 
 dependencies {
-	implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
+    implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
 
-	// Add this to compile as well for debugging
-	implementation 'org.jdrupes.mdoclet:doclet:3.0.0'
-	// mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
+    // Add this to compile as well for debugging
+    implementation 'org.jdrupes.mdoclet:doclet:3.0.0'
+    // mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
 }
 
 // Configure sensible layout
@@ -47,9 +47,9 @@ sourceSets {
         java {
             srcDir 'src'
         }
-		resources {
-			srcDir 'resources'
-		}
+        resources {
+            srcDir 'resources'
+        }
     }
 }
 
@@ -85,7 +85,7 @@ dependencies {
     markdownDoclet "org.jdrupes.mdoclet:doclet:3.0.0"
 }
  
-task java11doc(type: JavaExec) {
+task java17doc(type: JavaExec) {
     dependsOn classes
     inputs.file "overview.md"
 
@@ -100,7 +100,7 @@ task java11doc(type: JavaExec) {
     args = ['-doctitle', 'PlantUML Taglet',
         '-use',
         '-linksource',
-        '-link', 'https://docs.oracle.com/en/java/javase/11/docs/api/',
+        '-link', 'https://docs.oracle.com/en/java/javase/17/docs/api/',
         '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
         '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
         '-doclet', 'org.jdrupes.mdoclet.MDoclet',
@@ -124,32 +124,32 @@ task java11doc(type: JavaExec) {
 }
 
 task fatJar(type:Jar) {
-	from {
-		configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
-	}
-	with jar
-	classifier "all"
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+    classifier "all"
 }
 
 task sourcesJar(type: Jar) {
-	from sourceSets.main.allJava
-	classifier "sources"
+    from sourceSets.main.allJava
+    classifier "sources"
 }
 
 task javadocJar(type: Jar) {
-	from java11doc.destinationDir
-	classifier "javadoc"
+    from java17doc.destinationDir
+    classifier "javadoc"
 }
 
 // Allow build without signing information (e.g. travis)
 if (project.hasProperty('signing.keyId')) {
-	signing {
-		sign configurations.archives
-	}
+    signing {
+        sign configurations.archives
+    }
 }
 
 publishing {
-	
+    
     repositories {
         maven {
             name "snapshot"

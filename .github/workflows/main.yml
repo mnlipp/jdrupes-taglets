@@ -23,3 +23,5 @@ jobs:
         run: ./gradlew build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Build JavaDoc
+        run: ./gradlew :plantUml9:java17doc
