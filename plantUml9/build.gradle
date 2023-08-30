@@ -137,7 +137,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadocJar(type: Jar) {
-    from docs.destinationDir
+    from apidocs.destinationDir
     classifier "javadoc"
 }
 
