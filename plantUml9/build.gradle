@@ -137,7 +137,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadocJar(type: Jar) {
-    from java17doc.destinationDir
+    from docs.destinationDir
     classifier "javadoc"
 }
 
