@@ -138,7 +138,7 @@ task testJavaDoc(type: JavaExec) {
         '-link', 'https://docs.oracle.com/en/java/javase/17/docs/api/',
         '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
         '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
-        '-tagletpath', files(tasks.jar).asType(List).join(pathSeparator),
+        '-tagletpath', files(tasks.jar).asType(List).join(":"),
         '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
         '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
         '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
