@@ -1,24 +1,27 @@
 /*
  * JDrupes MDoclet
  * Copyright (C) 2021 Michael N. Lipp
- * 
- * This program is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation; either version 3 of the License, or 
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but 
+ * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License 
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
  * for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along 
+ * You should have received a copy of the GNU Affero General Public License along
  * with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'signing'
-apply plugin: 'maven-publish'
+plugins {
+  id 'com.github.johnrengelman.shadow' version '8.1.1'
+  id 'java'
+  id 'signing'
+  id 'maven-publish'
+}
 
 sourceCompatibility = '17'
 targetCompatibility = '17'
@@ -30,15 +33,18 @@ description = 'A taglet for processing PlantUML in javadoc comments'
 archivesBaseName = "plantuml-taglet"
 
 configurations {
-	mdoclet
+    doclets
+    taglets
 }
 
 dependencies {
-	implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
+    implementation 'net.sourceforge.plantuml:plantuml-mit:1.2023.10'
 
-	// Add this to compile as well for debugging
-	implementation 'org.jdrupes.mdoclet:doclet:3.0.0'
-	// mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
+    // Add this to compile as well for debugging
+    implementation 'org.jdrupes.mdoclet:doclet:3.0.0'
+    doclets 'org.jdrupes.mdoclet:doclet:3.0.0'
+
+    taglets "org.jdrupes.taglets:plantuml-taglet:2.1.0"
 }
 
 // Configure sensible layout
@@ -47,9 +53,9 @@ sourceSets {
         java {
             srcDir 'src'
         }
-		resources {
-			srcDir 'resources'
-		}
+        resources {
+            srcDir 'resources'
+        }
     }
 }
 
@@ -62,14 +68,14 @@ jar {
         from { generatePomFileForMavenPublication }
         rename ".*", "pom.xml"
     }
-    
+
     manifest {
         inputs.property("gitDescriptor", { grgit.describe() })
-        
+
         // Set Git revision information in the manifests of built bundles
         attributes('Git-SHA': grgit.head().id)
     }
-    
+
     doFirst {
         manifest {
             attributes('Git-Descriptor': inputs.properties['gitDescriptor'])
@@ -77,36 +83,36 @@ jar {
     }
 }
 
-configurations {
-    markdownDoclet
+javadoc {
+    options.tagletPath = configurations.taglets.files.asType(List)
+    options.taglets = ["org.jdrupes.taglets.plantUml.PlantUml"]
 }
- 
-dependencies {
-    markdownDoclet "org.jdrupes.mdoclet:doclet:3.0.0"
-}
- 
-task java11doc(type: JavaExec) {
-    dependsOn classes
+
+def isWindows = org.gradle.internal.os.OperatingSystem.current().isWindows()
+def pathSeparator = isWindows ? ';' : ':'
+
+task java17doc(type: JavaExec) {
+    dependsOn jar
     inputs.file "overview.md"
 
     jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
         '--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED']
     classpath sourceSets.main.compileClasspath
     classpath files(tasks.jar)
-    
+
     ext.destinationDir = '../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/'
-    
+
     main = 'jdk.javadoc.internal.tool.Main'
     args = ['-doctitle', 'PlantUML Taglet',
         '-use',
         '-linksource',
-        '-link', 'https://docs.oracle.com/en/java/javase/11/docs/api/',
+        '-link', 'https://docs.oracle.com/en/java/javase/17/docs/api/',
         '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
         '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
         '-doclet', 'org.jdrupes.mdoclet.MDoclet',
-        '-docletpath', configurations.markdownDoclet.files.asType(List).join(":"),
+        '-docletpath', configurations.doclets.files.asType(List).join(pathSeparator),
         '--disable-auto-highlight',
-        '-tagletpath', files(tasks.jar).asType(List).join(":"),
+        '-tagletpath', files(tasks.jar).asType(List).join(pathSeparator),
         '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
         '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
         '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
@@ -119,37 +125,65 @@ task java11doc(type: JavaExec) {
         '-Xdoclint:-html',
         '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED'
         ]
-    
+
     ignoreExitValue true
 }
 
-task fatJar(type:Jar) {
-	from {
-		configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
-	}
-	with jar
-	classifier "all"
+task testJavaDoc(type: JavaExec) {
+    dependsOn jar
+
+    jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
+        '--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED']
+    classpath sourceSets.main.compileClasspath
+    classpath files(tasks.jar)
+
+    // ext.destinationDir = '../../jdrupes-taglets.gh-pages/plantuml-taglet/javadoc/'
+
+    main = 'jdk.javadoc.internal.tool.Main'
+    args = ['-doctitle', 'test',
+        '-use',
+        '-linksource',
+        '-link', 'https://docs.oracle.com/en/java/javase/17/docs/api/',
+        '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
+        '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
+        '-tagletpath', files(tasks.jar).asType(List).join(pathSeparator),
+        '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
+        '-taglet', 'org.jdrupes.taglets.plantUml.PlantUmlMixedCase',
+        '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
+        '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
+        '-d', 'build/test-javadocs',
+        '-sourcepath', 'testfiles/',
+        '-subpackages', 'test:testMore',
+        '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED'
+        ]
+
+    ignoreExitValue true
 }
 
-task sourcesJar(type: Jar) {
-	from sourceSets.main.allJava
-	classifier "sources"
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
 }
 
-task javadocJar(type: Jar) {
-	from java11doc.destinationDir
-	classifier "javadoc"
+task javadocJar(type: Jar, dependsOn: java17doc) {
+    archiveClassifier.set('javadoc')
+    from java17doc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
 
 // Allow build without signing information (e.g. travis)
 if (project.hasProperty('signing.keyId')) {
-	signing {
-		sign configurations.archives
-	}
+    signing {
+        sign configurations.archives
+    }
 }
 
 publishing {
-	
     repositories {
         maven {
             name "snapshot"
@@ -168,7 +202,6 @@ publishing {
             }
         }
     }
-    
 }
 
 // Additional configuration of publishing
@@ -215,7 +248,7 @@ build.mustRunAfter "releaseTag"
 
 task stageOnOssrh {
     group = "publishing"
-    
+
     dependsOn "releaseTag"
     dependsOn "publishMavenPublicationToReleaseRepository"
 }

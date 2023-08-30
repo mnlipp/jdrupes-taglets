@@ -1,23 +1,16 @@
 package test;
 
 /**
- * Simple test file with a diagram in the class description.
+ * Test file with a diagram in the class description.
  *
  * <img src="example.svg" alt="Picture">
  *
- * {@plantuml example.svg
+ * {@plantUml example.svg
  * Alice --> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
  * }
  */
-public class Test {
-
-	/**
-	 * @param args the command line arguments
-	 */
+public class TestBlockFeature {
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
-
 }

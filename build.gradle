@@ -1,45 +1,38 @@
 /*
  * JDrupes MDoclet
  * Copyright (C) 2021 Michael N. Lipp
- * 
- * This program is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation; either version 3 of the License, or 
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but 
+ * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License 
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
  * for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along 
+ * You should have received a copy of the GNU Affero General Public License along
  * with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 plugins {
-    id 'org.ajoberstar.grgit' version '4.1.0'
+    id 'org.ajoberstar.grgit' version '5.2.0'
 }
- 
+
 allprojects {
-	
     repositories {
         jcenter()
         mavenCentral()
-		maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-		maven { url 'https://jitpack.io' }
     }
-	
+
 	// Makes Eclipse-groovy handle *.gradle file properly
-    apply plugin:'groovy' 
+    apply plugin:'groovy'
 
     group = 'org.jdrupes.taglets'
 }
 
 subprojects {
-
     apply from: "${project.rootDir}/gradle/eclipse.gradle"
-    
-	archivesBaseName = "${project.name}-taglet"
-
+    archivesBaseName = "${project.name}-taglet"
 }
-

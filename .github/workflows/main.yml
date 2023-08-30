@@ -1,25 +1,43 @@
 name: Java CI
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     strategy:
       matrix:
-        java-version: [ '17' ]
+        java-version: [ '17', '20' ]
+      fail-fast: false
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install graphviz
-        run: sudo apt-get install graphviz
+        run: sudo apt-get install -qy graphviz
       - name: Set up JDK ${{ matrix.java-version }}
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
-      - name: Build with Gradle
-        run: ./gradlew build
+          distribution: temurin
+      - run: ./gradlew build
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Build JavaDoc
+        run: ./gradlew :plantUml9:java17doc
+      - name: Generate test JavaDocs
+        run: ./gradlew testJavaDoc
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Test JavaDocs
+          path: plantUml9/build/test-javadocs
+      - name: Build JavaDoc of example project
+        run: ./gradlew -p plantUml9/exampleProject javadoc
+      - uses: actions/upload-artifact@v3
+        with:
+          name: JavaDoc of example project
+          path: plantUml9/exampleProject/build/docs/javadoc

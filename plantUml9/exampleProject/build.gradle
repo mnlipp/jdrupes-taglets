@@ -1,0 +1,29 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    taglets
+}
+
+dependencies {
+    taglets "org.jdrupes.taglets:plantuml-taglet:2.1.0"
+}
+
+javadoc {
+    options.tagletPath = configurations.taglets.files.asType(List)
+    options.taglets = ["org.jdrupes.taglets.plantUml.PlantUml", "org.jdrupes.taglets.plantUml.StartUml", "org.jdrupes.taglets.plantUml.EndUml"]
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+application {
+    mainClass = 'exampleproject.App'
+}
