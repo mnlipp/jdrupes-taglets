@@ -89,18 +89,16 @@ Here's an example:
 
 ```groovy
 configurations {
-    javadocTaglets
+    taglets
 }
 
 dependencies {
-    javadocTaglets "org.jdrupes.taglets:plantuml-taglet:<version>"
+    taglets "org.jdrupes.taglets:plantuml-taglet:2.1.0"
 }
 
 javadoc {
-
-    options.tagletPath = configurations.javadocTaglets.files as List
-    options.taglets = ["org.jdrupes.taglets.plantUml.Taglet"]
-    ...
+    options.tagletPath = configurations.taglets.files.asType(List)
+    options.taglets = ["org.jdrupes.taglets.plantUml.PlantUml", "org.jdrupes.taglets.plantUml.StartUml", "org.jdrupes.taglets.plantUml.EndUml"
 }
 ```
 
