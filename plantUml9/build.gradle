@@ -19,7 +19,6 @@
 apply plugin: 'java'
 apply plugin: 'signing'
 apply plugin: 'maven-publish'
-apply plugin: 'maven'
 
 sourceCompatibility = '11'
 targetCompatibility = '11'
@@ -35,10 +34,10 @@ configurations {
 }
 
 dependencies {
-	compile group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
+	implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
 
 	// Add this to compile as well for debugging
-	compile 'org.jdrupes.mdoclet:doclet:2.1.0'
+	implementation 'org.jdrupes.mdoclet:doclet:2.1.0'
 	// mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
 }
 
@@ -83,7 +82,7 @@ configurations {
 }
  
 dependencies {
-    markdownDoclet "org.jdrupes.mdoclet:doclet:2.1.0"
+    markdownDoclet "org.jdrupes.mdoclet:doclet:3.0.0"
 }
  
 task java11doc(type: JavaExec) {
