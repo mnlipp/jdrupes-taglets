@@ -53,7 +53,8 @@ import net.sourceforge.plantuml.preproc.Defines;
  */
 public class PlantUml implements Taglet {
 
-    private static final Logger logger = Logger.getLogger("org.jdrupes.taglets.plantUml.PlantUml");
+    private static final Logger logger
+        = Logger.getLogger(PlantUml.class.getName());
 
     private DocletEnvironment env;
     private JavaFileManager fileManager;
@@ -93,7 +94,8 @@ public class PlantUml implements Taglet {
         String plantUmlSource = tree.toString();
         String[] splitSource = plantUmlSource.split("\\s", 3);
         if (splitSource.length < 3) {
-            logger.log(Level.WARNING, "Invalid %0 tag. Content: %1", new Object[] {getName(), tree.toString()});
+            logger.log(Level.WARNING, "Invalid %0 tag. Content: %1",
+                new Object[] { getName(), tree.toString() });
             throw new IllegalArgumentException("Invalid " + getName()
                 + " tag: Expected filename and PlantUML source");
         }
