@@ -5,6 +5,8 @@ A taglet that generates UML diagrams with
   
 **Please note that starting with version 2.0.0 the taglet works with 
 the API introduced in Java 9. It has been tested with Java-11.**
+
+**Starting with version 3.0.0 the taglet requires Java-17.**
   
 Simply use the `@plantUml` tag to generate the graphics file from the 
 PlantUML source[^1]:
@@ -20,8 +22,7 @@ PlantUML source[^1]:
  * @plantUml example.svg
  * Alice -> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
- * 
-{@literal *}/
+ */
 ```
 
 This is rendered as:
