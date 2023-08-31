@@ -19,13 +19,22 @@ PlantUML source[^1]:
  *
  * This package/class ...
  *
+ * <!-- Use as inline tag (since version 3.0.0) -->
+ *
+ * {@plantUml example.svg
+ * Alice -> Bob: Authentication Request
+ * Alice <-- Bob: Authentication Response
+ * }
+ * 
+ * <!-- Use as block tag -->
+ *
  * @plantUml example.svg
  * Alice -> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
  */
 ```
 
-This is rendered as:
+This is rendered as (generated with only one usage pattern active):
 
 ---
 
@@ -39,11 +48,11 @@ This package/class ...
 
 [^1]: The PlantUML source for the example above is actually
     in the package description instead of the overview source file.
-    Java-11 to Java-15 (at least) drop block tags from an overview file.
-    (Used to worked in Java-8.) See the report in the
-    [Java Bug Database](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8264274)
+    Java-11 to Java-17 drop block tags from an overview file.
+    (Used to worked in Java-8, works again in Java-18.) See the report in 
+    the [Java Bug Database](https://bugs.openjdk.org/browse/JDK-8264274)
 
-The usage of "`<`" and "`>`" in PlantUML make javadoc complain about
+Using "`<`" or "`>`" in PlantUML makes javadoc complain about
 illegal HTML tokens. Of course, you could use "`&amp;lt;`" and "`&amp;gt;`" but
 this reduces the readability of the UML descriptions and is therefore
 not supported (the taglet does *not* scan for these sequences and convert
