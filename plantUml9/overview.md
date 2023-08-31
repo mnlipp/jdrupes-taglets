@@ -6,10 +6,45 @@ A taglet that generates UML diagrams with
 **Please note that starting with version 2.0.0 the taglet works with
 the API introduced in Java 9. It has been tested with Java-11.**
 
-**Starting with version 3.0.0 the taglet requires Java-17.**
+## News of version 3.0.0
 
-Simply use the `@plantUml` tag to generate the graphics file from the
-PlantUML source[^1]:
+- One can use `{`<code>@plantUml ...</code>`}` to generate PlantUML diagrams and have HTML valid JavaDoc without any escapings.
+- Starting with version 3.0.0 the taglet requires Java-17.
+
+## Quick Start
+
+Simply use the `@plantUml` inline tag to generate the graphics file from the
+PlantUML source:
+
+```java
+/**
+ * Description.
+ *
+ * <img src="example.svg">
+ *
+ * This package/class ...
+ *
+ * {@plantUml example.svg
+ * Alice -> Bob: Authentication Request
+ * Alice <-- Bob: Authentication Response
+ * }
+ */
+```
+
+This is rendered as:
+
+---
+
+Description.
+
+![Example Diagram](org/jdrupes/taglets/plantUml/example.svg)
+
+This package/class ...
+
+## Using as block tag
+
+The taglet can be used as block tag to avoid the wrapping within `{`...`}` of
+a PlantUML source[^1]:
 
 ```java
 /**
@@ -25,25 +60,14 @@ PlantUML source[^1]:
  */
 ```
 
-This is rendered as:
-
----
-
-Description.
-
-![Example Diagram](org/jdrupes/taglets/plantUml/example.svg)
-
-This package/class ...
-
----
-
 [^1]: The PlantUML source for the example above is actually
     in the package description instead of the overview source file.
-    Java-11 to Java-15 (at least) drop block tags from an overview file.
-    (Used to worked in Java-8.) See the report in the
-    [Java Bug Database](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8264274)
+    Java-11 to Java-17 drop block tags from an overview file.
+    It used to worked in Java-8 and works again in Java-18.
+    See the report in the
+    [Java Bug Database](https://bugs.openjdk.org/browse/JDK-8264274?attachmentSortBy=fileName)
 
-The usage of "`<`" and "`>`" in PlantUML make javadoc complain about
+However, the usage of "`<`" and "`>`" in PlantUML makes javadoc complain about
 illegal HTML tokens. Of course, you could use "`&amp;lt;`" and "`&amp;gt;`" but
 this reduces the readability of the UML descriptions and is therefore
 not supported (the taglet does *not* scan for these sequences and convert
@@ -69,7 +93,9 @@ your PlantUML description as this would terminate the HTML comment
 prematurely. Luckily, this isn't too hard because you can always exchange
 the left and right side of such a relation.
 
-It's also possible to use `@startuml` and `@enduml` instead of `@plantUml`,
+## Using `@startuml` and `@enduml`
+
+It is also possible to use `@startuml` and `@enduml` instead of `@plantUml`,
 which is the common usage pattern. `@startuml` is simply a synonym for
 `@plantUml` and `@enduml` will be ignored entirely. Use this for
 compatibility with other tools, like e.g. the
