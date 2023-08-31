@@ -20,8 +20,11 @@ apply plugin: 'java'
 apply plugin: 'signing'
 apply plugin: 'maven-publish'
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 version = '3.0.0-SNAPSHOT'
 
@@ -85,7 +88,7 @@ dependencies {
     markdownDoclet "org.jdrupes.mdoclet:doclet:3.1.0"
 }
 
-task testJavaDoc(type: JavaExec) {
+task testTaglets(type: JavaExec) {
     dependsOn jar
 
     jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
@@ -101,15 +104,17 @@ task testJavaDoc(type: JavaExec) {
             '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
             '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
             '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED',
-            '-d', 'build/test-javadocs',
-            '-tagletpath', files(tasks.jar).asType(List).join(":"),
+            '-d', 'build/test/taglets',
+            '-tagletpath', files(tasks.jar).asType(List).join(File.pathSeparator),
             '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
-            'testfiles/test/TestBlockFeature.java',
-            'testfiles/test/TestUnescapeFeature.java',
-            'testfiles/test/TestUnescapeFeatureWithComment.java'
+            '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
+            '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
+            '-sourcepath', 'testfiles/',
+            '-subpackages', 'test:testMore',
+            '-Xdoclint:-html'
     ]
 }
-check.dependsOn(testJavaDoc)
+check.dependsOn(testTaglets)
 
 task apidocs(type: JavaExec) {
     dependsOn classes

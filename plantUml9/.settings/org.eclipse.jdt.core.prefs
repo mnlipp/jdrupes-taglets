@@ -1,5 +1,5 @@
 #
-#Sun Jun 04 18:41:37 CEST 2023
+#Thu Aug 31 15:17:41 CEST 2023
 org.eclipse.jdt.core.formatter.insert_space_after_ellipsis=insert
 org.eclipse.jdt.core.formatter.insert_space_after_comma_in_enum_declarations=insert
 org.eclipse.jdt.core.formatter.insert_new_line_in_empty_annotation_declaration=insert
@@ -96,7 +96,7 @@ org.eclipse.jdt.core.formatter.insert_space_before_colon_in_for=insert
 org.eclipse.jdt.core.formatter.alignment_for_resources_in_try=16
 org.eclipse.jdt.core.formatter.alignment_for_selector_in_method_invocation=20
 org.eclipse.jdt.core.formatter.never_indent_block_comments_on_first_column=true
-org.eclipse.jdt.core.compiler.source=11
+org.eclipse.jdt.core.compiler.source=17
 org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_synchronized=do not insert
 org.eclipse.jdt.core.formatter.insert_new_line_in_empty_enum_constant=insert
 org.eclipse.jdt.core.formatter.insert_space_after_comma_in_allocation_expression=insert
@@ -108,7 +108,7 @@ org.eclipse.jdt.core.formatter.blank_lines_before_method=1
 org.eclipse.jdt.core.compiler.debug.sourceFile=generate
 org.eclipse.jdt.core.formatter.alignment_for_superclass_in_type_declaration=16
 org.eclipse.jdt.core.formatter.insert_space_before_parenthesized_expression_in_throw=insert
-org.eclipse.jdt.core.compiler.codegen.targetPlatform=11
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=17
 org.eclipse.jdt.core.formatter.insert_new_line_after_type_annotation=do not insert
 org.eclipse.jdt.core.formatter.insert_space_after_opening_brace_in_array_initializer=insert
 org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_parenthesized_expression=do not insert
@@ -153,7 +153,7 @@ org.eclipse.jdt.core.formatter.brace_position_for_array_initializer=end_of_line
 org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_method_declaration=insert
 org.eclipse.jdt.core.formatter.insert_space_after_comma_in_type_parameters=insert
 org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_catch=do not insert
-org.eclipse.jdt.core.compiler.compliance=11
+org.eclipse.jdt.core.compiler.compliance=17
 org.eclipse.jdt.core.formatter.insert_space_between_empty_braces_in_array_initializer=do not insert
 org.eclipse.jdt.core.formatter.insert_space_before_comma_in_multiple_local_declarations=do not insert
 org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_annotation_type_declaration=insert

@@ -25,7 +25,7 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
       - name: Build with Gradle
-        run: ./gradlew build apidocs
+        run: ./gradlew build check apidocs
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Test with Gradle
