@@ -5,7 +5,7 @@ package test;
  *
  * <img src="TestBlockFeature.svg" alt="Picture">
  *
- * {@plantUml TestBlockFeature.svg
+ * {@PlantUml TestBlockFeature.svg
  * Alice --> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
  * }

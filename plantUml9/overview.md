@@ -19,14 +19,14 @@ PlantUML source[^1]:
  *
  * This package/class ...
  *
- * <!-- Use as inline tag (since version 3.0.0) -->
+ * <!-- Use as inline tag (since version 3.0.0), note uppercase "P" -->
  *
- * {@plantUml example.svg
+ * {@PlantUml example.svg
  * Alice -> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
  * }
  * 
- * <!-- Use as block tag -->
+ * <!-- Use as block tag (note lowercase "p") -->
  *
  * @plantUml example.svg
  * Alice -> Bob: Authentication Request
