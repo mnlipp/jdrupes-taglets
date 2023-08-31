@@ -37,7 +37,7 @@ dependencies {
     implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
 
     // Add this to compile as well for debugging
-    implementation 'org.jdrupes.mdoclet:doclet:3.0.0'
+    implementation 'org.jdrupes.mdoclet:doclet:3.1.0'
     // mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
 }
 
@@ -82,7 +82,7 @@ configurations {
 }
 
 dependencies {
-    markdownDoclet "org.jdrupes.mdoclet:doclet:3.0.0"
+    markdownDoclet "org.jdrupes.mdoclet:doclet:3.1.0"
 }
 
 task apidocs(type: JavaExec) {
