@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.preproc.Defines;
 
 /**
- * A JDK11 doclet that generates UML diagrams from PlantUML 
+ * A JDK11 doclet that generates UML diagrams from PlantUML
  * specifications in the comment.
  */
 public class PlantUml implements Taglet {
@@ -79,7 +79,7 @@ public class PlantUml implements Taglet {
 
     @Override
     public boolean isInlineTag() {
-        return false;
+        return true;
     }
 
     @Override
