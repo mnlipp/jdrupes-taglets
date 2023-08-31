@@ -101,7 +101,7 @@ javadoc {
 
     options.tagletPath = configurations.javadocTaglets.files as List
     // List the taglets that you want to use.
-    options.taglets = ["org.jdrupes.taglets.plantUml.Taglet", ...]
+    options.taglets = ["org.jdrupes.taglets.plantUml.<Taglet>", ...]
     ...
 }
 ```
