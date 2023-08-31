@@ -8,8 +8,8 @@ the API introduced in Java 9. It has been tested with Java-11.**
 
 **Starting with version 3.0.0 the taglet requires Java-17.**
 
-Simply use the `@PlantUml` or `@plantUml` tag to generate the graphics file 
-from the PlantUML source[^1]:
+Simply use the `@plantUml` tag to generate the graphics file from the
+PlantUML source[^1]:
 
 ```java
 /**
@@ -19,14 +19,14 @@ from the PlantUML source[^1]:
  *
  * This package/class ...
  *
- * <!-- Use as inline tag (since version 3.0.0), note uppercase "P" -->
+ * <!-- Use as inline tag (since version 3.0.0) -->
  *
- * {@PlantUml example.svg
+ * {@plantUml example.svg
  * Alice -> Bob: Authentication Request
  * Alice <-- Bob: Authentication Response
  * }
  * 
- * <!-- Use as block tag (note lowercase "p") -->
+ * <!-- Use as block tag -->
  *
  * @plantUml example.svg
  * Alice -> Bob: Authentication Request

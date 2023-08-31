@@ -79,7 +79,12 @@ public class PlantUml implements Taglet {
 
     @Override
     public boolean isInlineTag() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public boolean isBlockTag() {
+        return true;
     }
 
     @Override

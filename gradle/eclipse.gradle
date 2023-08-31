@@ -6,7 +6,7 @@ eclipse {
         downloadSources = true
     }
     jdt {
-        javaRuntimeName = "JavaSE-11"
+        javaRuntimeName = "JavaSE-17"
         file {
             withProperties { properties ->
                 def formatterPrefs = new Properties()
