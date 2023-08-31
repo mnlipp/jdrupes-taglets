@@ -69,7 +69,7 @@ your PlantUML description as this would terminate the HTML comment
 prematurely. Luckily, this isn't too hard because you can always exchange
 the left and right side of such a relation.
 
-It's also possible to use `@startuml` and `@enduml` instead of `@plantuml`,
+It's also possible to use `@startuml` and `@enduml` instead of `@plantUml`,
 which is the common usage pattern. `@startuml` is simply a synonym for
 `@plantUml` and `@enduml` will be ignored entirely. Use this for
 compatibility with other tools, like e.g. the
