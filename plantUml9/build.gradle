@@ -104,7 +104,9 @@ task testJavaDoc(type: JavaExec) {
             '-d', 'build/test-javadocs',
             '-tagletpath', files(tasks.jar).asType(List).join(":"),
             '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
-            'testfiles/test/TestBlockFeature.java'
+            'testfiles/test/TestBlockFeature.java',
+            'testfiles/test/TestUnescapeFeature.java',
+            'testfiles/test/TestUnescapeFeatureWithComment.java'
     ]
 }
 check.dependsOn(testJavaDoc)

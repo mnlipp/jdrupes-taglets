@@ -117,8 +117,16 @@ public class PlantUml implements Taglet {
                     + splitSource[1] + ": " + e.getLocalizedMessage());
         }
 
+        String plantUmlContent = splitSource[2].trim()
+                // replace HTML escapes of < and >
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                // remove <-- and --> at the beginning / end
+                .replaceFirst("^<--", "")
+                .replaceFirst("-->$", "");
+
         // render
-        plantUmlSource = "@startuml\n" + splitSource[2].trim() + "\n@enduml";
+        plantUmlSource = "@startuml\n" + plantUmlContent + "\n@enduml";
         SourceStringReader reader = new SourceStringReader(
             Defines.createEmpty(), plantUmlSource, plantConfig());
         try {

@@ -9,6 +9,7 @@ the API introduced in Java 9. It has been tested with Java-11.**
 ## News of version 3.0.0
 
 - One can use `{`<code>@plantUml ...</code>`}` to generate PlantUML diagrams and have HTML valid JavaDoc without any escapings.
+- `@plantUml` (and `@startuml`) now unescape HTML escapings `&lt;` and `&gt;`.
 - Starting with version 3.0.0 the taglet requires Java-17.
 
 ## Quick Start
