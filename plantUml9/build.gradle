@@ -1,18 +1,18 @@
 /*
  * JDrupes MDoclet
  * Copyright (C) 2021 Michael N. Lipp
- * 
- * This program is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation; either version 3 of the License, or 
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but 
+ * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License 
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
  * for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along 
+ * You should have received a copy of the GNU Affero General Public License along
  * with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -30,7 +30,7 @@ description = 'A taglet for processing PlantUML in javadoc comments'
 archivesBaseName = "plantuml-taglet"
 
 configurations {
-    mdoclet
+    markdownDoclet
 }
 
 dependencies {
@@ -38,7 +38,9 @@ dependencies {
 
     // Add this to compile as well for debugging
     implementation 'org.jdrupes.mdoclet:doclet:3.1.0'
-    // mdoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
+
+    markdownDoclet "org.jdrupes.mdoclet:doclet:3.1.0"
+    // markdownDoclet 'com.github.mnlipp.jdrupes-mdoclet:doclet:master-SNAPSHOT'
 }
 
 // Configure sensible layout
@@ -62,14 +64,14 @@ jar {
         from { generatePomFileForMavenPublication }
         rename ".*", "pom.xml"
     }
-    
+
     manifest {
         inputs.property("gitDescriptor", { grgit.describe() })
-        
+
         // Set Git revision information in the manifests of built bundles
         attributes('Git-SHA': grgit.head().id)
     }
-    
+
     doFirst {
         manifest {
             attributes('Git-Descriptor': inputs.properties['gitDescriptor'])
@@ -77,14 +79,6 @@ jar {
     }
 }
 
-configurations {
-    markdownDoclet
-}
- 
-dependencies {
-    markdownDoclet "org.jdrupes.mdoclet:doclet:3.1.0"
-}
- 
 task apidocs(type: JavaExec) {
     dependsOn classes
     inputs.file "overview.md"
@@ -93,9 +87,9 @@ task apidocs(type: JavaExec) {
         '--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED']
     classpath sourceSets.main.compileClasspath
     classpath files(tasks.jar)
-    
+
     ext.destinationDir = "$projectDir/build/docs/javadoc"
-    
+
     main = 'jdk.javadoc.internal.tool.Main'
     args = ['-doctitle', 'PlantUML Taglet',
         '-use',
@@ -119,7 +113,7 @@ task apidocs(type: JavaExec) {
         '-Xdoclint:-html',
         '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED'
         ]
-    
+
     ignoreExitValue true
 }
 
@@ -154,7 +148,6 @@ if (project.hasProperty('signing.keyId')) {
 }
 
 publishing {
-    
     repositories {
         maven {
             name "snapshot"
@@ -173,7 +166,6 @@ publishing {
             }
         }
     }
-    
 }
 
 // Additional configuration of publishing
@@ -220,7 +212,7 @@ build.mustRunAfter "releaseTag"
 
 task stageOnOssrh {
     group = "publishing"
-    
+
     dependsOn "releaseTag"
     dependsOn "publishMavenPublicationToReleaseRepository"
 }
