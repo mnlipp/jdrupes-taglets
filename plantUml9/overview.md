@@ -93,13 +93,15 @@ configurations {
 }
 
 dependencies {
+    // See above for the latest version.
     javadocTaglets "org.jdrupes.taglets:plantuml-taglet:<version>"
 }
 
 javadoc {
 
     options.tagletPath = configurations.javadocTaglets.files as List
-    options.taglets = ["org.jdrupes.taglets.plantUml.Taglet"]
+    // List the taglets that you want to use.
+    options.taglets = ["org.jdrupes.taglets.plantUml.Taglet", ...]
     ...
 }
 ```
