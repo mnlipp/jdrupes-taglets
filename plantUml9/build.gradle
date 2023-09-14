@@ -37,7 +37,7 @@ configurations {
 }
 
 dependencies {
-    implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.8'
+    implementation group:'net.sourceforge.plantuml', name:'plantuml', version:'1.2023.11'
 
     // Add this to compile as well for debugging
     implementation 'org.jdrupes.mdoclet:doclet:3.1.0'
