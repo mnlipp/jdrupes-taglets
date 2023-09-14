@@ -120,7 +120,7 @@ public class PlantUml implements Taglet {
         // render
         String content = splitSource[2].trim();
         if (content.startsWith("<!--") && content.endsWith("-->")) {
-            content = content.substring(4, content.length() - 7);
+            content = content.substring(4, content.length() - 3);
         }
         plantUmlSource = "@startuml\n" + content + "\n@enduml";
         SourceStringReader reader = new SourceStringReader(
