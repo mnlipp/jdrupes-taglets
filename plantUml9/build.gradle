@@ -88,7 +88,7 @@ dependencies {
     markdownDoclet "org.jdrupes.mdoclet:doclet:3.1.0"
 }
 
-task testTaglets(type: JavaExec) {
+task testLintable(type: JavaExec) {
     dependsOn jar
 
     jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
@@ -104,17 +104,44 @@ task testTaglets(type: JavaExec) {
             '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
             '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
             '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED',
-            '-d', 'build/test/taglets',
+            '-d', 'build/test/testLintable',
             '-tagletpath', files(tasks.jar).asType(List).join(File.pathSeparator),
             '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
             '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
             '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
             '-sourcepath', 'testfiles/',
-            '-subpackages', 'test:testMore',
+            '-subpackages', 'testLintable'
+    ]
+}
+check.dependsOn(testLintable)
+
+task testAll(type: JavaExec) {
+    dependsOn jar
+
+    jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
+               '--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED']
+    classpath sourceSets.main.compileClasspath
+    classpath files(tasks.jar)
+
+    main = 'jdk.javadoc.internal.tool.Main'
+    args = ['-doctitle', 'test',
+            '-use',
+            '-linksource',
+            '-link', 'https://docs.oracle.com/en/java/javase/17/docs/api/',
+            '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
+            '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
+            '--add-exports=jdk.javadoc/jdk.javadoc.internal.doclets.formats.html=ALL-UNNAMED',
+            '-d', 'build/test/testAll',
+            '-tagletpath', files(tasks.jar).asType(List).join(File.pathSeparator),
+            '-taglet', 'org.jdrupes.taglets.plantUml.PlantUml',
+            '-taglet', 'org.jdrupes.taglets.plantUml.StartUml',
+            '-taglet', 'org.jdrupes.taglets.plantUml.EndUml',
+            '-sourcepath', 'testfiles/',
+            '-subpackages', 'testLintable:testMore',
             '-Xdoclint:-html'
     ]
 }
-check.dependsOn(testTaglets)
+check.dependsOn(testAll)
 
 task apidocs(type: JavaExec) {
     dependsOn classes

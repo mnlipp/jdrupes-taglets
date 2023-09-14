@@ -1,4 +1,4 @@
-package test;
+package testLintable;
 
 /**
  * Test file with a diagram in the class description.
@@ -10,7 +10,7 @@ package test;
  * Alice <-- Bob: Authentication Response
  * }
  */
-public class TestBlockFeature {
+public class TestInline {
 	/**
 	 * The main class
 	 * @param args Ignored

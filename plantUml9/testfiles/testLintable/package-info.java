@@ -9,4 +9,4 @@
  * Alice <-- Bob: Authentication Response
  * -->
  */
-package test;
+package testLintable;

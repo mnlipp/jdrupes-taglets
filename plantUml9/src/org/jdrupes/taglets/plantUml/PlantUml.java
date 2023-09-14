@@ -118,7 +118,11 @@ public class PlantUml implements Taglet {
         }
 
         // render
-        plantUmlSource = "@startuml\n" + splitSource[2].trim() + "\n@enduml";
+        String content = splitSource[2].trim();
+        if (content.startsWith("<!--") && content.endsWith("-->")) {
+            content = content.substring(4, content.length() - 7);
+        }
+        plantUmlSource = "@startuml\n" + content + "\n@enduml";
         SourceStringReader reader = new SourceStringReader(
             Defines.createEmpty(), plantUmlSource, plantConfig());
         try {
