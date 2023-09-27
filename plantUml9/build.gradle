@@ -26,7 +26,7 @@ java {
     }
 }
 
-version = '3.0.0'
+version = '3.1.0'
 
 description = 'A taglet for processing PlantUML in javadoc comments'
 
@@ -144,11 +144,12 @@ task testAll(type: JavaExec) {
 check.dependsOn(testAll)
 
 task apidocs(type: JavaExec) {
-    dependsOn classes
+    dependsOn jar
     inputs.file "overview.md"
 
-    jvmArgs = ['--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
-        '--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED']
+    jvmArgs = ['--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
+      '--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED'
+        ]
     classpath sourceSets.main.compileClasspath
     classpath files(tasks.jar)
 
@@ -159,8 +160,8 @@ task apidocs(type: JavaExec) {
         '-use',
         '-linksource',
         '-link', 'https://docs.oracle.com/en/java/javase/17/docs/api/',
-        '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
         '--add-exports', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
+        '--add-exports', 'jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED',
         '-doclet', 'org.jdrupes.mdoclet.MDoclet',
         '-docletpath', configurations.markdownDoclet.files
             .asType(List).join(File.pathSeparator),

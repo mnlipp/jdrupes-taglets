@@ -32,7 +32,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.SimpleElementVisitor8;
+import javax.lang.model.util.SimpleElementVisitor14;
 import javax.tools.DocumentationTool;
 import javax.tools.FileObject;
 import javax.tools.JavaFileManager;
@@ -105,7 +105,12 @@ public class PlantUml implements Taglet {
                 + " tag: Expected filename and PlantUML source");
         }
 
-        String packageName = extractPackageName(element);
+        String packageName = "";
+        String elementType = element.getClass().getName();
+        if (elementType.endsWith("Symbol$ClassSymbol")
+            || elementType.endsWith("Symbol$PackageSymbol")) {
+            packageName = extractPackageName(element);
+        }
         FileObject graphicsFile;
         try {
             graphicsFile = fileManager.getFileForOutput(
@@ -137,7 +142,7 @@ public class PlantUml implements Taglet {
     }
 
     private String extractPackageName(Element element) {
-        return element.accept(new SimpleElementVisitor8<>() {
+        return element.accept(new SimpleElementVisitor14<>() {
 
             @Override
             public Name visitPackage(PackageElement e, Object p) {
